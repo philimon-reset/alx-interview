@@ -23,12 +23,21 @@
 # Registers:
 
 # File marks:
-'0  5  0  ~/1-user_limit.pp
-'1  12  0  ~/1-user_limit.pp
-'2  19  0  ~/1-user_limit.pp
-'3  1  1  ~/1-user_limit.pp
+'0  15  0  ~/0x01-lockboxes/0-lockboxes.py
+'1  5  0  ~/1-user_limit.pp
+'2  12  0  ~/1-user_limit.pp
+'3  19  0  ~/1-user_limit.pp
+'4  1  1  ~/1-user_limit.pp
 
 # Jumplist (newest first):
+-'  15  0  ~/0x01-lockboxes/0-lockboxes.py
+-'  1  0  ~/0x01-lockboxes/0-lockboxes.py
+-'  5  0  ~/1-user_limit.pp
+-'  1  0  ~/1-user_limit.pp
+-'  12  0  ~/1-user_limit.pp
+-'  19  0  ~/1-user_limit.pp
+-'  8  0  ~/1-user_limit.pp
+-'  15  0  ~/1-user_limit.pp
 -'  5  0  ~/1-user_limit.pp
 -'  1  0  ~/1-user_limit.pp
 -'  12  0  ~/1-user_limit.pp
@@ -37,6 +46,12 @@
 -'  15  0  ~/1-user_limit.pp
 
 # History of marks within files (newest to oldest):
+
+> ~/0x01-lockboxes/0-lockboxes.py
+	"	15	0
+	^	15	0
+	.	14	15
+	+	14	15
 
 > ~/1-user_limit.pp
 	"	5	0
