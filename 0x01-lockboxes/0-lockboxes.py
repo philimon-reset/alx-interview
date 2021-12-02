@@ -1,9 +1,14 @@
 #!/user/bin/python3
-""" Lockboxes """
+
+"""
+  Lockboxes: Write a method that determines if all the boxes can be opened.
+"""
 
 
 def canUnlockAll(boxes):
-    """ LockBoxes Function """
+    """
+      LockBoxes Function: Return True if all boxes can be opened, else false
+    """
     T = []
     for i in range(1, len(boxes)):
         order = [T.extend(x) for x in boxes[:i] + boxes[i + 1:]]
