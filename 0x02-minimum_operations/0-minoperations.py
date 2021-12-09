@@ -6,7 +6,7 @@
 def minOperations(n: int) -> int:
     """ Minimum Operations needed to get n H characters """
     flag = False
-    if n < 2:
+    if n < 2 or type(n) != int:
         return 0
     for i in range(2, n):
         if (n % i) == 0:
