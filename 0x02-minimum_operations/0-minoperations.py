@@ -31,10 +31,3 @@ def minOperations(n: int) -> int:
             C += C
             check = len(C)
     return orand
-
-if __name__ == '__main__':
-    n = 4
-    print("Min # of operations to reach {} char: {}".format(n, minOperations(n)))
-
-    n = 25
-    print("Min # of operations to reach {} char: {}".format(n, minOperations(n)))
