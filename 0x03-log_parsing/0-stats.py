@@ -22,7 +22,6 @@ def signal_handler(sig, frame):
     for key, value in status.items():
         print(f"{key}: {value}")
 
-signal.signal(signal.SIGINT, signal_handler)
 
 for i in sys.stdin:
     result = re.match(match_B, i)
@@ -34,3 +33,5 @@ for i in sys.stdin:
             print(f"File size: {file_S}")
             for key, value in status.items():
                 print(f"{key}: {value}")
+
+signal.signal(signal.SIGINT, signal_handler)
