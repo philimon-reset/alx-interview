@@ -17,6 +17,7 @@ status = {
     "405": 0,
     "500": 0}
 
+
 def signal_handler(sig, frame):
     print(f"File size: {file_S}")
     for key, value in status.items():
