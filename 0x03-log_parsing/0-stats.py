@@ -2,13 +2,13 @@
 """ Log parser project """
 
 
+import random
 import sys
+from time import sleep
 import re
 import signal
 
 match_B = re.compile("""\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3} - \[\d{4}-\d{1,2}-\d{1,2} \d{2}:\d{2}:\d{2}\.\d+\] "GET /projects/260 HTTP/1.1" (\d{3}) (\d{1,4})""")  # nopep8
-cursor = 0
-file_S = 0
 status = {
     "200": 0,
     "301": 0,
@@ -20,22 +20,33 @@ status = {
     "500": 0}
 
 
-def signal_handler(sig, frame):
+def signal_handler():
     """ signal handler """
+    cursor = 0
+    file_S = 0
+    for i in sys.stdin:
+        result = re.match(match_B, i)
+        if result:
+            cursor += 1
+            status[result.group(1)] += 1
+            file_S += int(result.group(2))
+            if cursor % 10 == 0:
+                print(f"File size: {file_S}")
+                for key, value in status.items():
+                    if value != 0:
+                        print(f"{key}: {value}")
+    return file_S
+
+
+def print_leftover(file_S):
+    """ print the leftovers """
     print(f"File size: {file_S}")
     for key, value in status.items():
-        print(f"{key}: {value}")
+        if value != 0:
+            print(f"{key}: {value}")
 
-
-for i in sys.stdin:
-    result = re.match(match_B, i)
-    if result:
-        cursor += 1
-        status[result.group(1)] += 1
-        file_S += int(result.group(2))
-        if cursor % 10 == 0:
-            print(f"File size: {file_S}")
-            for key, value in status.items():
-                print(f"{key}: {value}")
-
-signal.signal(signal.SIGINT, signal_handler)
+if __name__ == '__main__':
+    try:
+        file = signal_handler()
+    finally:
+        print_leftover(file)
