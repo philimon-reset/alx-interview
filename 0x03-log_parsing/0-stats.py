@@ -14,7 +14,8 @@ def print_leftover(file_S):
             print(f"{key}: {value}")
 
 if __name__ == '__main__':
-    match_B = re.compile("""\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3} - \[\d{4}-\d{1,2}-\d{1,2} \d{2}:\d{2}:\d{2}\.\d+\] "GET /projects/260 HTTP/1.1" (\d{3}) (\d{1,4})""")  # nopep8
+    match_B = re.compile(
+    r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3} - \[\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}.\d+\] "GET /projects/260 HTTP/1.1" (.{3}) (\d+)')  # nopep8
     cursor = 0
     file_S = 0
     status = {
