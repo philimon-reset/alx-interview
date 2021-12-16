@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" Log parser project """
+""" Log parser projec """
 
 
 import sys
