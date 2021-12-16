@@ -1,4 +1,6 @@
 #!/usr/bin/python3
+""" Log parser project """
+
 
 import sys
 import re
@@ -19,6 +21,7 @@ status = {
 
 
 def signal_handler(sig, frame):
+    """ signal handler """
     print(f"File size: {file_S}")
     for key, value in status.items():
         print(f"{key}: {value}")
