@@ -30,4 +30,3 @@ except KeyboardInterrupt:
     print(f"File size: {file_S}")
     for key, value in status.items():
         print(f"{key}: {value}")
-
