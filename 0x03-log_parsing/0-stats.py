@@ -1,50 +1,43 @@
 #!/usr/bin/python3
-"""
-log parsing
-"""
+""" Log parser project """
+
 
 import sys
 import re
 
 
-def output(log: dict) -> None:
-    """
-    helper function to display stats
-    """
-    print("File size: {}".format(log["file_size"]))
-    for code in sorted(log["code_frequency"]):
-        if log["code_frequency"][code]:
-            print("{}: {}".format(code, log["code_frequency"][code]))
+def print_leftover(file_S):
+    """ print the leftovers """
+    print(f"File size: {file_S}")
+    for key, value in status.items():
+        if value != 0:
+            print(f"{key}: {value}")
 
-
-if __name__ == "__main__":
-    regex = re.compile(
+if __name__ == '__main__':
+    match_B = re.compile(
     r'\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3} - \[\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}.\d+\] "GET /projects/260 HTTP/1.1" (.{3}) (\d+)')  # nopep8
-
-    line_count = 0
-    log = {}
-    log["file_size"] = 0
-    log["code_frequency"] = {
-        str(code): 0 for code in [
-            200, 301, 400, 401, 403, 404, 405, 500]}
-
+    cursor = 0
+    file_S = 0
+    status = {
+        "200": 0,
+        "301": 0,
+        "400": 0,
+        "401": 0,
+        "403": 0,
+        "404": 0,
+        "405": 0,
+        "500": 0}
     try:
-        for line in sys.stdin:
-            line = line.strip()
-            match = regex.fullmatch(line)
-            if (match):
-                line_count += 1
-                code = match.group(1)
-                file_size = int(match.group(2))
-
-                # File size
-                log["file_size"] += file_size
-
-                # status code
-                if (code.isdecimal()):
-                    log["code_frequency"][code] += 1
-
-                if (line_count % 10 == 0):
-                    output(log)
+        for i in sys.stdin:
+            result = re.match(match_B, i)
+            if result:
+                cursor += 1
+                status[result.group(1)] += 1
+                file_S += int(result.group(2))
+                if cursor % 10 == 0:
+                    print(f"File size: {file_S}")
+                    for key, value in status.items():
+                        if value != 0:
+                            print(f"{key}: {value}")
     finally:
-        output(log)
+        print_leftover(file_S)
