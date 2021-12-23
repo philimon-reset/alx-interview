@@ -8,6 +8,8 @@ def validUTF8(data):
     jump_list = {30: 3, 14: 4, 6: 5}
     char_length = {3: 3, 4: 2, 5: 1}
     list_length = 0
+    if len(data) == 0:
+        return True
     if len(data) == 1 and data[0] >> 6 == 1:
         return True
     for num in data:
