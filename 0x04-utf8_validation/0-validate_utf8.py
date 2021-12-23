@@ -24,6 +24,6 @@ def validUTF8(data):
                     list_length = char_length[shift]
             if not list_length:
                 return False
-        if num >> 7 == 0 and flag:
+        elif num >> 7 == 0 and flag:
             return False
     return True
