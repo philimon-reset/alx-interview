@@ -17,7 +17,7 @@ def validUTF8(data):
             list_length -= 1
         else:
             flag = False
-        if num >> 6 != 1 and len(bin(num)[2:]) >= 8:
+        if num >> 7 != 0 and len(bin(num)[2:]) >= 8:
             flag = True
             for test_point, shift in jump_list.items():
                 if num >> shift == test_point:
