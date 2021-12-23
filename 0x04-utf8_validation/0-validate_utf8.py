@@ -18,12 +18,16 @@ def validUTF8(data):
         else:
             flag = False
         if num >> 7 != 0 and len(bin(num)[2:]) >= 8:
-            flag = True
+            if (not flag and num >> 6 == 2) or (flag and num >> 6 != 2):
+                return False
             for test_point, shift in jump_list.items():
                 if num >> shift == test_point:
                     list_length = char_length[shift]
-                else:
-                    return False
+                    break
+            if not (list_length and flag):
+                return False
+            else:
+                flag = True
         elif num >> 7 == 0 and flag:
             return False
     return True
