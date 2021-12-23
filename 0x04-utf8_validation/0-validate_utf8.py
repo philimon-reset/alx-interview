@@ -10,7 +10,7 @@ def validUTF8(data):
     list_length = 0
     if len(data) == 0:
         return True
-    if len(data) == 1 and data[0] >> 6 == 1:
+    if len(data) == 1 and data[0] >> 7 == 0:
         return True
     for num in data:
         if list_length:
@@ -24,6 +24,6 @@ def validUTF8(data):
                     list_length = char_length[shift]
                 else:
                     return False
-        if num >> 6 == 1 and flag:
+        if num >> 7 == 0 and flag:
             return False
     return True
