@@ -15,6 +15,8 @@ def validUTF8(data):
             list_length -= 1
         else:
             flag = False
+        if len(bin(num)[2:]) == 9:
+            num = int(bin(num)[3:], 2)
         if num >> 7 != 0 and len(bin(num)[2:]) >= 8:
             if (not flag and num >> 6 == 2):
                 return False
