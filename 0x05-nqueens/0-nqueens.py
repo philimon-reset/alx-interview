@@ -1,87 +1,96 @@
 #!/usr/bin/python3
-""" N queens interview """
 
 import sys
 
-board = {}
+if len(sys.argv) != 2:
+    print("Usage: nqueens N")
+    exit(1)
 
-def make_board(dimension):
-    """ Generate board based on dimensions """
-    for row in range(0, dimension):
-        for column in range(0, dimension):
-            placement = (row, column)
-            board[placement] = "#"
-    return board
+if not sys.argv[1].isnumeric():
+    print("N must be a number")
+    exit(1)
+
+N = queens = int(sys.argv[1])
+if N < 4:
+    print("N must be at least 4")
+    exit(1)
 
 
-def printing_board(dimension):
-    """ function to print the board """
-    i = 0
-    for keys, values in board.items():
-        if i % dimension == 0 and i != 0:
-            print()
-        i += 1
-        print(f"| {values} |", end="")
+def CrossOut(g, cell, dimension):
+    Grid = [x[:] for x in g]
+    Grid[cell[0]][cell[1]] = 1
 
-def main():
-    if len(sys.argv) != 2:
-        print("Usage: nqueens N")
-        exit(1)
-    try:
-        dimension = int(sys.argv[1])
-        if dimension < 4:
-            print("N must be at least 4")
-            exit(1)
-        else:
-            board = make_board(dimension)
-            fill_block(dimension, (0,0))
-            printing_board(dimension)
+    # Horizontal
+    for i in range(dimension):
+        if Grid[cell[0]][i] != 1:
+            Grid[cell[0]][i] = -1
 
-    except Exception as E:
-        print("N must be a number", E)
-        exit(1)
+    # Vertical
+    for j in range(dimension):
+        if Grid[j][cell[1]] != 1:
+            Grid[j][cell[1]] = -1
 
-def fill_block(dimension, index):
-    """ function to fill queens available spots """
-    board[index] = 0
-# -------------------------------------------
-    diagonal_C_neg_x = []
-    diagonal_C_pos_x = []
-    diagonal_C_neg_y = []
-    diagonal_C_pos_y= []
-    x = index[1]
-    while x - 1 >= 0:
-        less_x = (index[0], x - 1)
-        diagonal_C_neg_x.append(x - 1)
-        board[less_x] = 1
-        x -= 1
+    # Right Diagonal
+    if cell[1] < dimension - 1:
+        for x in range(1, dimension - cell[1]):
+            try:
+                Grid[cell[0] + x][cell[1] + x] = -1
+            except BaseException:
+                pass
+            try:
+                if cell[0] - x >= 0:
+                    Grid[cell[0] - x][cell[1] + x] = -1
+            except BaseException:
+                pass
 
-    y = index[0]
-    while y - 1 >= 0:
-        less_y = (y - 1, index[1])
-        diagonal_C_neg_y.append(y - 1)
-        board[less_y] = 1
-        y -= 1
+    # Left Diagonal
+    if cell[1] > 0:
+        for x in range(1, cell[1] + 1):
+            try:
+                if cell[1] - x >= 0:
+                    Grid[cell[0] + x][cell[1] - x] = -1
+            except BaseException:
+                pass
+            try:
+                if (cell[0] - x >= 0) and (cell[1] - x >= 0):
+                    Grid[cell[0] - x][cell[1] - x] = -1
+            except BaseException:
+                pass
 
-    x = index[1]
-    while x + 1 < dimension:
-        more_x = (index[0], x + 1)
-        diagonal_C_pos_x.append(x + 1)
-        board[more_x] = 1
-        x += 1
+    return Grid
 
-    y = index[0]
-    while y + 1 < dimension:
-        more_y = (y + 1, index[1])
-        diagonal_C_pos_y.append(y + 1)
-        board[more_y] = 1
-        y += 1
 
-    upper_left = tuple(zip(diagonal_C_pos_y, diagonal_C_neg_x))
-    upper_right = tuple(zip(diagonal_C_pos_y, diagonal_C_pos_x))
-    lower_left = tuple(zip(diagonal_C_neg_y, diagonal_C_neg_x))
-    lower_right = tuple(zip(diagonal_C_neg_y, diagonal_C_pos_x))
-    for ind in (upper_left + upper_right + lower_left + lower_right):
-        board[ind] = 1
-if __name__ == '__main__':
-    main()
+def CountSpots(grid, dimension):
+    count = 0
+    for i in range(dimension):
+        for j in range(dimension):
+            if grid[i][j] == 0:
+                count += 1
+    return count
+
+
+def get_answer(grid, dimension):
+    spots = []
+    for i in range(dimension):
+        for j in range(dimension):
+            if grid[i][j] == 1:
+                spots.append([i, j])
+    return spots
+
+
+def solve(grid, row, col, dimension, queens):
+    attempt = CrossOut(grid, [row, col], dimension)
+    i = row + 1
+    queens -= 1
+    if i < dimension and CountSpots(grid, dimension) > queens:
+        for j in range(dimension):
+            if attempt[i][j] == 0:
+                solve(attempt, i, j, dimension, queens)
+    spots = get_answer(attempt, dimension)
+    if len(spots) == dimension:
+        print(spots)
+
+
+initial_grid = [[0] * N for i in range(N)]
+for col in range(N):
+    solve(initial_grid, 0, col, N, N)
