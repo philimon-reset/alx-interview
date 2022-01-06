@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+""" -*- coding """
 
 import sys
 
