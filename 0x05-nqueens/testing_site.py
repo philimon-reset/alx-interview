@@ -24,64 +24,66 @@ def printing_board(dimension):
         print(f"| {values} |", end="")
 
 def main():
-    # if len(sys.argv) != 2:
-    #     print("Usage: nqueens N")
-    #     exit(1)
+    if len(sys.argv) != 2:
+        print("Usage: nqueens N")
+        exit(1)
     try:
-        dimension = 6
-        # if dimension < 4:
-        #     print("N must be at least 4")
-        #     exit(1)
+        dimension = int(sys.argv[1])
+        if dimension < 4:
+            print("N must be at least 4")
+            exit(1)
         safe = []
-        total_run = []
-        started = False
-        spots_left = dimension
-        for x in range(0, dimension):
-            for y in range(0, dimension):
-                if started == False:
-                    board = make_board(dimension)
-                    current = fill_block(dimension, (x,y), spots_left)
-                    spots_left -= 1
-                    if not current:
-                        board = make_board(dimension)
-                        spots_left = dimension
-                        total_run = []
-                    else:
-                        total_run.extend(((x,y), current))
-                        spots_left -= 1
-                        started = True
-                while spots_left > 0:
-                    current = fill_block(dimension, current, spots_left)
-                    spots_left -= 1
-                    total_run.append(current)
-                    print(total_run, "\n", "\n")
-                    if not current:
-                        board = make_board(dimension)
-                        spots_left = dimension
-                        total_run = []
-                        break
-                valid = True
-                if len(total_run) > 0:
-                    for i in range(len(safe)):
-                        if len(set(safe[i]) - set(total_run)) != 0:
-                            pass
-                        else:
-                            valid = False
-                            break
-                    if valid:
-                        safe.append(total_run)
-                    spots_left = dimension
-                    total_run = []
-                started = False
-        for i in safe:
-            print(i)
+        for y in range(0, dimension):
+            initial = (0, dimension)
+            search_board(dimension, safe, initial)
     except Exception as E:
         print("N must be a number", E)
         exit(1)
 
 
+def validate(dimension):
+    """ validate the placement """
+    if len([i for i in board.values() if i == "#"]) < dimension and len([i for i in board.values() if i == 0]) != dimension:
+        return False
+    return True
 
-def fill_block(dimension, index, spots_left):
+def search_board(dimension, safe, inital):
+    """ backtracker """
+    current = fill_block(dimension, inital)
+    if current:
+        for i in current:
+            if validate(dimension):
+                if search_board(dimension, safe, i):
+                    safe.append(i)
+                
+            else:
+                return False
+    if len([i for i in board.values() if i == 0]) == dimension:
+        print(safe)
+        return True
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+def fill_block(dimension, index):
     """ function to fill queens available spots """
     board[index] = 0
 # -------------------------------------------
@@ -133,9 +135,7 @@ def fill_block(dimension, index, spots_left):
         if board.get(ind) == 0:
             return False
         board[ind] = 1
-    if len([i for i in board.values() if i == "#"]) < spots_left and spots_left != 0:
-        return False
-    return [i for i in board.keys() if board[i] == "#"][0]
+    return [i for i in board.keys() if board[i] == "#"]
 
 
 if __name__ == '__main__':
