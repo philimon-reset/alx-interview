@@ -2,21 +2,27 @@
 const request = require('request');
 const { argv } = require('process');
 
-url = 'https://swapi-api.hbtn.io/api/films/' + argv[2]
+const url = 'https://swapi-api.hbtn.io/api/films/' + argv[2];
 
 request(url, async (error, response, body) => {
   if (error) {
     console.log(error);
-  }
-  else {
+  } else {
     for (const value of JSON.parse(body).characters) {
-      request(value, (err, response, body) => {
-        if (err) {
-          console.log(err);
-        }
-        else {
-          console.log(JSON.parse(body).name);
-        }
-      });
-  }}
-})
+      const res = await Makerequest(value);
+      console.log(res);
+    }
+  }
+});
+
+function Makerequest (url) {
+  return new Promise((resolve, reject) => {
+    request(url, (err, response, body) => {
+      if (err) {
+        console.log(err);
+      } else {
+        resolve(JSON.parse(body).name);
+      }
+    });
+  });
+}
