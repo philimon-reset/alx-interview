@@ -1,16 +1,26 @@
 #!/usr/bin/python3
 """ N queens interview """
+
 import sys
 
+if len(sys.argv) != 2:
+    print("Usage: nqueens N")
+    exit(1)
+try:
+    dimension = int(sys.argv[1])
+except Exception as E:
+    print("N must be a number")
+    exit(1)
 
-def printing_board(dimension, board):
-    """ function to print the board """
-    i = 0
-    for values in board.values():
-        if i % dimension == 0 and i != 0:
-            print()
-        i += 1
-        print(f"|{values} |", end="")
+if dimension < 4:
+    print("N must be at least 4")
+    exit(1)
+
+board = {}
+for row in range(0, dimension):
+    for column in range(0, dimension):
+        placement = (row, column)
+        board[placement] = "#"
 
 
 def validate(board, spots):
@@ -100,24 +110,8 @@ def fill_block(dimension, index, board_T):
     return board
 
 
-if len(sys.argv) != 2:
-    print("Usage: nqueens N")
-    exit(1)
-try:
-    dimension = int(sys.argv[1])
-    if dimension < 4:
-        print("N must be at least 4")
-        exit(1)
-    board = {}
-    for row in range(0, dimension):
-        for column in range(0, dimension):
-            placement = (row, column)
-            board[placement] = "#"
-    for i in range(0, dimension):
-        inital = (0, i)
-        safe_T = [list(inital)]
-        spots_L = dimension - 1
-        solve(dimension, inital, board, safe_T, spots_L)
-except Exception as E:
-    print("N must be a number", E)
-    exit(1)
+for i in range(0, dimension):
+    inital = (0, i)
+    safe_T = [list(inital)]
+    spots_L = dimension - 1
+    solve(dimension, inital, board, safe_T, spots_L)
