@@ -31,7 +31,7 @@ def solve(dimension, index, board, safe_T, spots_L):
         for i in range(dimension):
             try:
                 if moved_board[(inital[0], i)] == "#":
-                    safe_T.append((inital[0], i))
+                    safe_T.append([inital[0], i])
                     if not solve(
                             dimension, (inital[0], i), moved_board,
                             safe_T, spots_L):
@@ -115,7 +115,7 @@ try:
             board[placement] = "#"
     for i in range(0, dimension):
         inital = (0, i)
-        safe_T = [inital]
+        safe_T = [list(inital)]
         spots_L = dimension - 1
         solve(dimension, inital, board, safe_T, spots_L)
 except Exception as E:
