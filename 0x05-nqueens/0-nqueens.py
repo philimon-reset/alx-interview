@@ -1,7 +1,5 @@
 #!/usr/bin/python3
 """ N queens interview """
-
-from shutil import move
 import sys
 
 
@@ -51,7 +49,6 @@ def fill_block(dimension, index, board_T):
     """ function to fill queens available spots """
     board = board_T.copy()
     board[index] = 0
-# -------------------------------------------
     diagonal_C_neg_x = []
     diagonal_C_pos_x = []
     diagonal_C_neg_y = []
