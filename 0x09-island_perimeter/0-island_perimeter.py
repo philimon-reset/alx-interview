@@ -1,4 +1,7 @@
 #!/usr/bin/python3
+""" This is a bad way to get island perimeter """
+
+
 def island_perimeter(grid):
     """ Islands perimeter and i am ashamed"""
     sum = 0
