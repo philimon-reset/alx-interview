@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 def island_perimeter(grid):
+    """ Islands perimeter and i am ashamed"""
     sum = 0
     for i in range(len(grid)):
         for x in range(len(grid[i])):
@@ -22,6 +23,7 @@ def island_perimeter(grid):
 
 
 def total(grid, i, x, fb_ver, fb_ver2, fb_ver_n):
+    """ get total perimeter now """
     sum = 0
     if x == 0 and grid[i][x] == 1:
         if fb_ver2 and (not fb_ver_n) and grid[i][x + 1] != 1:
