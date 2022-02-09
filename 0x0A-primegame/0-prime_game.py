@@ -24,9 +24,11 @@ def isWinner(x, nums):
     M = {"Turn": True, "Score": 0}
     B = {"Turn": False, "Score": 0}
     round = 0
-    while (round < x):
+    while (x):
         B["Turn"] = False
         M["Turn"] = True
+        if round >= len(nums):
+            round = 0
         current = [x for x in range(1, nums[round] + 1)]
         while(len(current) > 1):
             if get_first_prime(current):
@@ -42,6 +44,7 @@ def isWinner(x, nums):
         else:
             M["Score"] += 1
         round += 1
+        x -= 1
     if B["Score"] < M["Score"]:
         return 'Maria'
     return 'Ben'
