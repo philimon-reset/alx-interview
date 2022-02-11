@@ -21,6 +21,8 @@ def isPrime(x):
 
 def isWinner(x, nums):
     """ return name of the player that won the most rounds """
+    if x != len(nums):
+        return None
     M = {"Turn": True, "Score": 0}
     B = {"Turn": False, "Score": 0}
     round = 0
